@@ -763,91 +763,142 @@
         }
 		
 		        
-        /* 자아상 변화 섹션 스타일 - NEW */
-        .self-transformation-section {
-            padding: 40px 0;
-            text-align: center;
-        }
-        .transformation-header {
-            font-size: 2.2rem;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .highlight-text {
-            display: inline-block;
-            background-color: #FFEB3B;
-            padding: 2px 10px;
-            font-weight: bold;
-            transform: skew(-5deg);
-            position: relative;
-        }
-        .transformation-subheader {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 40px;
-            color: #444;
-        }
-        .transformation-showcase {
-            max-width: 850px;
-            margin: 0 auto 40px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            background-color: #fff;
-        }
-        .showcase-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-bottom: 1px solid #eee;
-        }
-        .transformation-footer {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 30px 0;
-            color: #2ecc71;
-        }
-        .highlight-green {
-            color: #2ecc71;
-            font-weight: bold;
-        }
-        .value-proposition {
-            margin-top: 40px;
-            padding: 30px;
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            max-width: 850px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .value-proposition h3 {
-            font-weight: bold;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        .value-proposition p {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: #555;
-            line-height: 1.6;
-        }
-        .audience-tag {
-            display: inline-block;
-            background-color: #f7aa4d;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin: 5px;
-            font-size: 0.9rem;
-        }
-        .audience-section {
-            margin-top: 20px;
-        }
-		
+		/* 자아상 변화 섹션 스타일 */
+		.self-transformation-section {
+			text-align: center;
+			padding: 3rem 1rem;
+		}
+
+		.transformation-header {
+			font-size: 2.25rem;
+			font-weight: 800;
+			line-height: 1.2;
+			margin-bottom: 1.5rem;
+		}
+
+		@media (min-width: 640px) {
+			.transformation-header {
+				font-size: 3rem;
+			}
+		}
+
+		.highlight-text {
+			display: inline-block;
+			background-color: #fff200;
+			padding: 0 0.5rem;
+			font-weight: 700;
+		}
+
+		.transformation-subheader {
+			font-size: 1.25rem;
+			margin-bottom: 2rem;
+			color: #555;
+		}
+
+		.transformation-showcase {
+			margin: 2rem 0;
+		}
+
+		.showcase-img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 8px;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+			margin: 0 auto;
+		}
+
+		.highlight-green {
+			color: #1ab394;
+			font-weight: 700;
+		}
+
+		.audience-section {
+			margin-top: 2rem;
+			background-color: #f8f9fa;
+			padding: 1.5rem;
+			border-radius: 8px;
+		}
+
+		.audience-tag {
+			display: inline-block;
+			background-color: #f7aa4d;
+			color: white;
+			padding: 0.5rem 1rem;
+			border-radius: 30px;
+			margin: 0.3rem;
+			font-size: 0.9rem;
+			font-weight: 600;
+		}
+
+		/* 사용자 불만 섹션 스타일 */
+		.user-complaints-section {
+			max-width: 600px;
+			margin: 0 auto 2rem;
+			background-color: #e8f5e9;
+			padding: 1.5rem;
+			border-radius: 12px;
+		}
+
+		.user-profile {
+			font-weight: 700;
+			margin-top: 1.5rem;
+			margin-bottom: 0.5rem;
+			text-align: left;
+		}
+
+		.chat-bubble {
+			background-color: white;
+			padding: 1rem 1.5rem;
+			border-radius: 18px;
+			position: relative;
+			max-width: 85%;
+			margin-left: 0;
+			text-align: left;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+		}
+
+		.chat-emoji {
+			font-size: 1.4rem;
+			vertical-align: middle;
+			margin-left: 0.5rem;
+		}
+
+		.complaint-summary {
+			background-color: white;
+			padding: 1.5rem;
+			border-radius: 12px;
+			margin-top: 2rem;
+			text-align: left;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+		}
+
+		.complaint-summary h3 {
+			font-size: 1.2rem;
+			font-weight: 700;
+			margin-bottom: 1rem;
+			color: #333;
+		}
+
+		.key-highlight {
+			background-color: rgba(247, 170, 77, 0.2);
+		}
+
+		/* 모바일 최적화 */
+		@media (max-width: 640px) {
+			.mobile-section-title {
+				font-size: 1.75rem;
+				line-height: 1.3;
+			}
+			
+			.mobile-section-subtitle {
+				font-size: 1rem;
+			}
+			
+			.chat-bubble {
+				max-width: 90%;
+			}
+		}
+
 		
     </style>
 </head>
