@@ -1,0 +1,1641 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANELO: 프리미엄 AI 디지털 휴먼 제작 마스터 가이드</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #fff;
+            color: #333;
+            letter-spacing: -0.025em;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #fff8f0 0%, #ffefd7 100%);
+        }
+        .premium-card {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        .highlight {
+            background: linear-gradient(104deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, #ffd7a3 50%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            animation: highlight 1.5s ease-in-out infinite;
+        }
+        @keyframes highlight {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0% 0; }
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .price-tag {
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+        }
+        .before-after-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .image-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active {
+            background-color: #555;
+        }
+        .anelo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .anelo-image-card {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .anelo-image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        .steps-container {
+            counter-reset: step;
+        }
+        .step-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+            counter-increment: step;
+        }
+        .step-item::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #f7aa4d;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .review-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .review-stars {
+            color: #f7aa4d;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .review-message-card {
+            background-color: #f1e2ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .review-emoji {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+        }
+        .key-color {
+            color: #f7aa4d;
+        }
+        .key-bg {
+            background-color: #f7aa4d;
+        }
+        .key-border {
+            border-color: #f7aa4d;
+        }
+        .key-highlight {
+            background-color: rgba(247, 170, 77, 0.2);
+        }
+        .kmong-badge {
+            background-color: #f7aa4d;
+            color: white;
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 6px;
+        }
+        .kmong-card {
+            border-left: 4px solid #f7aa4d;
+            background-color: #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .kmong-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        .rating-badge {
+            background-color: #fff;
+            color: #f7aa4d;
+            border: 2px solid #f7aa4d;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-weight: bold;
+        }
+        .credential-icon {
+            color: #f7aa4d;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .comparison-container {
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+        .comparison-header {
+            padding: 16px 24px;
+            background-color: #f7aa4d;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .comparison-content {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        .comparison-images {
+            display: flex;
+            flex-direction: row;
+        }
+        .comparison-col {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .comparison-col.bad {
+            background-color: #fff0f0;
+            border-right: 1px solid #eee;
+        }
+        .comparison-col.good {
+            background-color: #f0fff0;
+        }
+        .comparison-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 16px;
+        }
+        .comparison-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .comparison-description {
+            padding: 20px;
+            background-color: #f8f9fa;
+            font-size: 1.1rem;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+        .comparison-highlight {
+            font-weight: bold;
+            color: #f7aa4d;
+        }
+        /* 새로운 스타일 추가 */
+        .warning-card {
+            background-color: #fff8f0;
+            border-left: 4px solid #f7aa4d;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .warning-item {
+            position: relative;
+            padding-left: 36px;
+            margin-bottom: 16px;
+        }
+        .warning-item::before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 20px;
+        }
+        .proof-badge {
+            display: inline-block;
+            background-color: #f7aa4d;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .review-preview-card {
+            background-color: #f1e2ff;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .review-preview-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f7aa4d;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(247, 170, 77, 0.3);
+        }
+        /* AI 생존 섹션 관련 스타일 */
+        .survival-card {
+            background: linear-gradient(135deg, #fff 0%, #fff8f0 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .survival-header {
+            background-color: #f04d4d;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+        }
+        .survival-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #f04d4d;
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #f04d4d;
+            margin-bottom: 0.5rem;
+        }
+        .ai-future-badge {
+            display: inline-block;
+            background-color: #f04d4d;
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .survival-highlight {
+            background-color: rgba(240, 77, 77, 0.1);
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        /* AI 클릭 한번 오해 섹션 관련 스타일 */
+        .misconception-card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
+        }
+        .misconception-header {
+            background-color: #e63946;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.5rem;
+        }
+        .misconception-banner {
+            background-color: #ffedee;
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid #ffd6d9;
+            font-weight: bold;
+            color: #e63946;
+        }
+        .misconception-images {
+            display: flex;
+            flex-direction: column;
+            md:flex-direction: row;
+        }
+        .misconception-img-container {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .misconception-img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        .misconception-caption {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #555;
+        }
+        .misconception-footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            font-size: 1.1rem;
+        }
+        .prompt-highlight {
+            font-weight: bold;
+            color: #e63946;
+            background-color: rgba(230, 57, 70, 0.1);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<!-- <body class="min-h-screen"> -->
+    <!-- <!-- Header --> -->
+    <!-- <header class="w-full bg-white py-4 px-6 sm:px-12 md:px-24 border-b border-gray-200 sticky top-0 z-50"> -->
+        <!-- <div class="container mx-auto flex justify-between items-center"> -->
+            <!-- <div class="text-3xl font-bold key-color">ANELO</div> -->
+            <!-- <nav class="hidden md:flex space-x-8"> -->
+                <!-- <a href="#overview" class="font-medium text-gray-600 hover:text-black">개요</a> -->
+                <!-- <a href="#contents" class="font-medium text-gray-600 hover:text-black">목차</a> -->
+                <!-- <a href="#benefits" class="font-medium text-gray-600 hover:text-black">혜택</a> -->
+                <!-- <a href="#gallery" class="font-medium text-gray-600 hover:text-black">포트폴리오</a> -->
+                <!-- <a href="#pricing" class="font-medium text-gray-600 hover:text-black">가격</a> -->
+                <!-- <a href="#faq" class="font-medium text-gray-600 hover:text-black">FAQ</a> -->
+            <!-- </nav> -->
+            <!-- <a href="#purchase" class="key-bg text-white px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition-colors">구매하기</a> -->
+        <!-- </div> -->
+    <!-- </header> -->
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20 px-6 sm:px-12 md:px-24">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
+                        <span class="block">당신만의</span>
+                        <span class="block highlight text-black">AI 디지털 휴먼</span>
+                        <span class="block">제작 기술을 마스터하세요</span>
+                    </h1>
+                    <p class="text-xl text-gray-700 mb-8">
+                        단순한 이론이 아닌, <strong>실제 1,300건 이상의 판매 경험과 100,000장 이상의 이미지 제작 노하우</strong>가 담긴 
+                        프리미엄 전자책
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#purchase" class="key-bg text-white text-lg px-8 py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors text-center">
+                            지금 구매하기
+                        </a>
+                        <a href="#contents" class="border border-black text-black text-lg px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors text-center">
+                            더 알아보기
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-8 md:mt-0">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/600x400/f8f9fa/999999?text=ANELO+AI+Digital+Human" alt="ANELO AI 디지털 휴먼" class="rounded-lg shadow-2xl max-w-full h-auto">
+                        <div class="absolute -bottom-4 -right-4 key-bg text-white py-2 px-4 rounded-lg shadow-lg">
+                            <span class="text-sm">10만장 이상의 제작 경험</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 검증된 5성급 후기 섹션 (NEW) -->
+    <section class="py-12 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-8">
+                <div class="flex justify-center">
+                    <div class="review-preview-badge">
+                        <i class="fas fa-star mr-2"></i> 검증된 5성급 후기
+                    </div>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold mb-2">사용자들이 직접 증명한 ANELO의 가치</h2>
+                <div class="flex justify-center mb-2">
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="text-gray-700 ml-2 font-medium">4.9/5.0 (수백 건의 실제 리뷰)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <div class="review-preview-card mb-3">
+                        <p class="pr-8 font-medium">"정말 꿀팁으로만 꾹꾹 채워져 있어서 정말 후회없었습니다!!"</p>
+                        <span class="review-emoji">🤩</span>
+                    </div>
+                    <p class="text-gray-700 text-sm">
+                        <span class="key-highlight px-1 font-bold">현업자 강의 들어보자!</span> 하고 시작했는데 정말 꿀팁으로만 꾹꾹 채워져 있어서 후회가 없었습니다.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <div class="review-preview-card mb-3">
+                        <p class="pr-8 font-medium">"진짜 탁월한 선택이였던거 같아요!!"</p>
+                        <span class="review-emoji">😍</span>
+                    </div>
+                    <p class="text-gray-700 text-sm">
+                        4시간이 넘게 하나하나 꼼꼼하게 알려주신 덕분에 답답했던 기분이 싹 풀렸습니다. 특히 미드저니, 포토샵 꿀팁 진짜 많이 배웠습니다.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <div class="review-preview-card mb-3">
+                        <p class="pr-8 font-medium">"베스킨 아이스크림처럼 내용들이 정말 가득 담겨있었습니다."</p>
+                        <span class="review-emoji">😌</span>
+                    </div>
+                    <p class="text-gray-700 text-sm">
+                        강의는 굉장히 만족스러웠습니다. 엄청나게 <span class="key-highlight px-1 font-bold">꾹꾹 눌러 담은듯한 베스킨 아이스크림처럼</span> 내용들이 정말 가득 담겨있었습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI 클릭 한번 오해 섹션 (NEW) -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="misconception-card">
+                <div class="misconception-header">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> AI 그거, 클릭 한번으로 되는거 아냐?
+                </div>
+
+                <div class="misconception-banner">
+                    AI를 단순하게 생각하시는 분들은 진지하게 다른 강의를 들어주세요.
+                </div>
+
+                <div class="flex flex-col md:flex-row">
+                    <div class="misconception-img-container">
+                        <img src="https://via.placeholder.com/500x600/f8f9fa/555555?text=고퀄리티+AI+이미지" alt="고퀄리티 AI 이미지" class="misconception-img">
+                        <p class="misconception-caption">ANELO 노하우로 만든 고퀄리티 이미지</p>
+                    </div>
+                    
+                    <div class="misconception-img-container">
+                        <img src="https://via.placeholder.com/500x600/f8f9fa/999999?text=무작위+클릭+결과물" alt="무작위 클릭 결과물" class="misconception-img">
+                        <p class="misconception-caption">랜덤하게 클릭한 결과물</p>
+                    </div>
+                </div>
+
+                <div class="misconception-footer">
+                    <p class="mb-4 text-lg font-bold">
+                        "이런 이미지들이 나올때까지 계속 클릭하고 기도 하실건가요?"
+                    </p>
+                    <p class="text-gray-700">
+                        우리가 기획하고, 의도한 내용을 연출하기 위해선 <span class="prompt-highlight">정밀한 프롬프트 엔지니어링</span>과 <span class="prompt-highlight">사소한 디테일들을 놓치지 말아야 합니다.</span> 수백 번의 클릭으로 운에 맡기는 것보다 체계적인 방법을 배워 단 몇 번의 시도로 원하는 결과를 얻으세요.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-10 bg-white p-6 rounded-lg shadow-lg border-l-4 border-red-500">
+                <h3 class="text-xl font-bold mb-3">AI는 도구일 뿐, 마법이 아닙니다</h3>
+                <p class="text-gray-700">
+                    고품질 AI 이미지 제작은 전문적인 기술과 경험이 필요합니다. 단순히 프롬프트를 입력하고 버튼을 클릭하는 것만으로는 전문가 수준의 결과물이 나오지 않습니다. ANELO의 가이드는 클릭 한 번이 아닌, <span class="key-highlight px-2 py-1 font-bold">수많은 시행착오를 거쳐 검증된 최적의 방법론</span>을 제시합니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 시중 강의 문제점 및 ANELO 검증 섹션 (NEW) -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">현재 시중에 있는 강의,<br>이런걸 들으시지 않으셨나요?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    대부분의 AI 강의들은 이론만 가득하고 실제 검증된 결과가 없습니다
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="warning-card p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-800">시중 AI 강의의 현실</h3>
+                    
+                    <div class="warning-item">
+                        <h4 class="text-lg font-bold">실제 판매 경험 or 공개된 후기나 검증 방법이 없음</h4>
+                        <p class="text-gray-600 mt-2">
+                            대부분의 강사들은 실제로 자신이 배운 것을 비즈니스에 적용해 본 경험이 없거나, 있다해도 공개적으로 검증할 수 있는 방법이 없습니다. 
+                        </p>
+                    </div>
+                    
+                    <div class="warning-item">
+                        <h4 class="text-lg font-bold">불필요한 나열식 커리큘럼으로 시간만 잡아먹음</h4>
+                        <p class="text-gray-600 mt-2">
+                            방대한 양의 정보를 체계 없이 나열하여 정작 실무에 필요한 핵심 기술은 놓치게 만들고, 불필요한 내용으로 시간만 낭비하게 됩니다.
+                        </p>
+                    </div>
+                    
+                    <div class="warning-item">
+                        <h4 class="text-lg font-bold">신기한 기술만 나열하고, 실용성 있는 기술인지는 알려주지 않음</h4>
+                        <p class="text-gray-600 mt-2">
+                            최신 기술을 소개하는 데만 집중하고, 그 기술이 실제 비즈니스에서 어떻게 수익으로 연결되는지에 대한 방법론은 제공하지 않습니다.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-lg">
+                    <div class="flex justify-center mb-6">
+                        <div class="proof-badge">
+                            <i class="fas fa-check-circle mr-2"></i>저요? 저는 증명했습니다.
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center gap-6 mb-6">
+                        <div class="w-full md:w-1/3">
+                            <img src="https://via.placeholder.com/300x200/f8f9fa/999999?text=ANELO+증명" alt="ANELO 검증 증명" class="rounded-lg shadow-md w-full">
+                        </div>
+                        <div class="w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-3">이론이 아닌, 실제 검증된 전문가</h3>
+                            <p class="text-gray-700 mb-4">
+                                ANELO는 <span class="key-highlight px-2 py-1 font-bold">크몽 플랫폼 내 AI 디지털 휴먼 분야 Prime 등급</span>으로 인정받은 검증된 전문가입니다. 실제 1,300건 이상의 판매 경험과 수백 명의 고객으로부터 받은 높은 평가(4.9/5.0)가 이를 증명합니다.
+                            </p>
+                            <div class="flex items-center mt-4">
+                                <div class="rating-badge mr-4">평점 4.9/5.0</div>
+                                <div class="text-yellow-400 flex">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-4xl key-color mb-2 text-center">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <h4 class="text-center font-bold">검증된 포트폴리오</h4>
+                            <p class="text-sm text-center text-gray-600">누구나 볼 수 있는 공개 포트폴리오</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-4xl key-color mb-2 text-center">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h4 class="text-center font-bold">실제 고객 후기</h4>
+                            <p class="text-sm text-center text-gray-600">수백 명의 검증된 고객 리뷰</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality Comparison Section (NEW) -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">아직도 이런 이미지 만드세요?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    AI 이미지의 퀄리티 차이는 단순한 프롬프트가 아닌<br>수십 가지 디테일에서 비롯됩니다
+                </p>
+            </div>
+            
+            <div class="comparison-container">
+                <div class="comparison-images">
+                    <div class="comparison-col bad">
+                        <div class="comparison-title text-red-500">성의없는 AI 이미지</div>
+                        <img src="https://via.placeholder.com/500x600/ffefef/ff5555?text=Low+Quality+AI" alt="낮은 퀄리티의 AI 이미지" class="comparison-image">
+                        <div class="px-4 py-2 bg-red-100 text-red-700 rounded-lg text-center">
+                            <i class="fas fa-times-circle mr-2"></i>부자연스러운 표정
+                        </div>
+                        <div class="px-4 py-2 bg-red-100 text-red-700 rounded-lg text-center mt-2">
+                            <i class="fas fa-times-circle mr-2"></i>어색한 피부 질감
+                        </div>
+                        <div class="px-4 py-2 bg-red-100 text-red-700 rounded-lg text-center mt-2">
+                            <i class="fas fa-times-circle mr-2"></i>기형적인 신체 비율
+                        </div>
+                    </div>
+                    <div class="comparison-col good">
+                        <div class="comparison-title text-green-500">ANELO의 고퀄리티 AI 휴먼</div>
+                        <img src="https://via.placeholder.com/500x600/f0fff0/55aa55?text=ANELO+Quality+AI" alt="ANELO의 고퀄리티 AI 이미지" class="comparison-image">
+                        <div class="px-4 py-2 bg-green-100 text-green-700 rounded-lg text-center">
+                            <i class="fas fa-check-circle mr-2"></i>자연스러운 표정과 감정
+                        </div>
+                        <div class="px-4 py-2 bg-green-100 text-green-700 rounded-lg text-center mt-2">
+                            <i class="fas fa-check-circle mr-2"></i>실제 같은 피부 질감
+                        </div>
+                        <div class="px-4 py-2 bg-green-100 text-green-700 rounded-lg text-center mt-2">
+                            <i class="fas fa-check-circle mr-2"></i>완벽한 비율과 디테일
+                        </div>
+                    </div>
+                </div>
+                <div class="comparison-description">
+                    <p class="text-red-500 font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>이런 성의없는 AI는 시장에서 외면당합니다 (증거 이미지 첨부)</p>
+                    <p class="mt-4">
+                        <span class="comparison-highlight">사소한 디테일 수십개가 합쳐서 완성도 있는 AI 휴먼을 만들어내고 가치를 극대화 시키는 겁니다.</span><br>
+                        ANELO의 가이드를 통해 이 모든 디테일을 마스터할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p class="text-xl text-gray-700">
+                    실제 10만장 이상의 이미지를 제작하며 얻은 노하우로<br>
+                    <span class="key-highlight px-2 py-1 font-bold">단 한 번에 완벽한 AI 디지털 휴먼</span>을 제작하는 방법을 공개합니다
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kmong Achievements Section (MOVED UP) -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">이론이 아닌, 실제 검증된 전문가의 노하우</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    다른 강사들과 달리 ANELO는 실재하는 서비스와 검증된 포트폴리오를 보유하고 있습니다
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-12">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-1/3">
+                        <div class="flex justify-center">
+                            <img src="https://via.placeholder.com/300x200/f8f9fa/999999?text=Kmong+Prime" alt="크몽 Prime 등급 인증" class="rounded-lg shadow-md">
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <div class="flex items-center mb-4">
+                            <span class="kmong-badge">PRIME</span>
+                            <h3 class="text-2xl font-bold">크몽 인증 플랫폼 1위 AI 디지털 휴먼 전문가</h3>
+                        </div>
+                        <div class="flex items-center mb-6">
+                            <div class="rating-badge mr-4">평점 4.9/5.0</div>
+                            <div class="text-yellow-400 flex">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            <strong>크몽 프리랜서 중개 플랫폼에서 수백 건의 판매 실적</strong>을 기록하며 최고 등급인 'Prime' 판매자로 인정받았습니다. 다른 강사들과 달리 ANELO는 실제 서비스를 제공하고 있으며, 그 과정에서 얻은 실전 경험과 노하우를 모두 이 가이드에 담았습니다.
+                        </p>
+                        <div class="flex flex-wrap gap-3 mt-6">
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">수백 건의 판매 실적</span>
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Prime 등급 인증</span>
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">4.9/5.0 고객 평점</span>
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">검증된 포트폴리오</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="kmong-card p-6 rounded-lg">
+                    <div class="credential-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">실재하는 서비스</h3>
+                    <p class="text-gray-600">
+                        다른 강사들은 공개하는 자기 서비스도 없이 이론만 가르치지만, ANELO는 실제 운영 중인 서비스와 포트폴리오를 통해 실력을 증명합니다.
+                    </p>
+                </div>
+
+                <div class="kmong-card p-6 rounded-lg">
+                    <div class="credential-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">검증된 고객 후기</h3>
+                    <p class="text-gray-600">
+                        수백 명의 실제 고객이 남긴 4.9점(5점 만점)의 높은 평점과 후기는 ANELO의 서비스 품질과 전문성을 증명합니다.
+                    </p>
+                </div>
+
+                <div class="kmong-card p-6 rounded-lg">
+                    <div class="credential-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">업계 1위 전문가</h3>
+                    <p class="text-gray-600">
+                        크몽 플랫폼 내 AI 디지털 휴먼 분야에서 최고 등급인 Prime 판매자로 인정받은 검증된 전문가의 노하우를 배울 수 있습니다.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg mt-12 border-l-4 key-border shadow-md">
+                <h3 class="text-xl font-bold mb-3">사기성 강의와의 차별점</h3>
+                <p class="text-gray-700">
+                    시중의 많은 AI 관련 강의들은 증명되지 않은 이론만 전달합니다. <strong class="key-color">실제 비즈니스 경험도, 포트폴리오도, 검증된 후기도 없는 강사들</strong>과 달리, ANELO는 수백 건의 실제 서비스와 4.9점의 고객 평가로 실력을 증명합니다. 검증된 전문가에게 배우는 것, 그것이 성공의 지름길입니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-20 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">단순한 가이드가 아닌,<br>검증된 경험에서 나온 실전 지식</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    ANELO 팀은 AI 기술을 활용한 디지털 휴먼 제작의 선두주자입니다. 
+                    저희의 노하우와 기술력을 모두 담아낸 이 가이드는 여러분을 AI 디지털 휴먼 제작의 전문가로 만들어 드립니다.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="premium-card p-8 feature-card">
+                    <div class="text-4xl key-color mb-4">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">1,300+ 판매 경험</h3>
+                    <p class="text-gray-600">
+                        이론만이 아닌 실제 판매와 프로젝트를 통해 검증된 실전 노하우를 배울 수 있습니다.
+                    </p>
+                </div>
+                
+                <div class="premium-card p-8 feature-card">
+                    <div class="text-4xl key-color mb-4">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">100,000+ 이미지 제작</h3>
+                    <p class="text-gray-600">
+                        수많은 시행착오를 거쳐 완성된 고퀄리티 이미지 제작 기술을 모두 공개합니다.
+                    </p>
+                </div>
+                
+                <div class="premium-card p-8 feature-card">
+                    <div class="text-4xl key-color mb-4">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">실전 중심 커리큘럼</h3>
+                    <p class="text-gray-600">
+                        이론과 실무를 완벽하게 연결한 체계적인 학습 과정으로 빠르게 성장할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI 시대 생존과 경쟁력 섹션 (NEW) -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">AI를 배우지 않으면 뒤처집니다</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    빠르게 변화하는 AI 시대에서 살아남으려면 지금 바로 적응해야 합니다
+                </p>
+            </div>
+
+            <div class="survival-card mb-12">
+                <div class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                        <div class="stat-card">
+                            <div class="survival-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="stat-number">85%</div>
+                            <p class="font-bold text-gray-800 mb-2">업무 자동화 가능</p>
+                            <p class="text-gray-600 text-sm">
+                                2025년까지 전문직 업무의 85%가 AI로 자동화될 것으로 예측됩니다.
+                            </p>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="survival-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-number">47%</div>
+                            <p class="font-bold text-gray-800 mb-2">일자리 위험</p>
+                            <p class="text-gray-600 text-sm">
+                                향후 10년 내 기존 일자리의 47%가 AI로 대체될 위험에 처해있습니다.
+                            </p>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="survival-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-number">2X</div>
+                            <p class="font-bold text-gray-800 mb-2">연봉 상승 효과</p>
+                            <p class="text-gray-600 text-sm">
+                                AI 스킬을 보유한 전문가들은 평균적으로 2배 이상의 연봉을 받고 있습니다.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 text-4xl text-red-500 mr-4">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">지금 적응하지 않으면 뒤처집니다</h3>
+                                <p class="text-gray-700">
+                                    AI 기술은 이제 선택이 아닌 필수입니다. <span class="survival-highlight">AI를 배우지 않는다는 것은 디지털 문맹이 되기로 선택하는 것과 같습니다.</span> 지금 적응하지 않는 사람들은 점점 더 경쟁에서 뒤처지게 될 것입니다. AI 기술은 단순한 트렌드가 아닌, 모든 산업을 재편하는 혁명적인 변화입니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex mb-4">
+                                <div class="ai-future-badge">
+                                    <i class="fas fa-arrow-down mr-1"></i> 위험에 처한 직업군
+                                </div>
+                            </div>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-center">
+                                    <i class="fas fa-times-circle text-red-500 mr-2"></i>
+                                    단순 반복적인 디자인 작업자
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-times-circle text-red-500 mr-2"></i>
+                                    일반 스톡 이미지 판매자
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-times-circle text-red-500 mr-2"></i>
+                                    기술 혁신에 적응하지 못하는 전통적 크리에이터
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-times-circle text-red-500 mr-2"></i>
+                                    AI 지식 없는 디지털 콘텐츠 제작자
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex mb-4">
+                                <div class="ai-future-badge" style="background-color: #55aa55;">
+                                    <i class="fas fa-arrow-up mr-1"></i> 미래 유망 직업군
+                                </div>
+                            </div>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    AI 프롬프트 엔지니어링 전문가
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    AI 디지털 휴먼 디자이너
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    AI 기반 크리에이티브 콘텐츠 전략가
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    AI 이미지 후처리 및 커스터마이징 전문가
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-red-500">
+                <h3 class="text-xl font-bold mb-3">AI 시대의 고급 인력이 되는 선택</h3>
+                <p class="text-gray-700 mb-4">
+                    AI 기술은 일부 직업을 대체하지만, 동시에 AI를 능숙하게 다루는 전문가에게는 전례 없는 기회를 제공합니다. <span class="survival-highlight">ANELO의 가이드는 단순히 기술을 알려주는 것이 아니라, AI 시대에 경쟁력 있는 고급 인력으로 거듭나는 방법을 제시합니다.</span>
+                </p>
+                <p class="text-gray-700">
+                    지금 이 순간에도 AI 기술은 빠르게 발전하고 있으며, 적응하는 사람과 뒤처지는 사람 사이의 격차는 점점 더 커지고 있습니다. 당신은 어느 쪽이 되기를 원하십니까?
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contents Section -->
+    <section id="contents" class="py-20 px-6 sm:px-12 md:px-24 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center">상세 커리큘럼</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div class="steps-container">
+                    <div class="step-item">
+                        <h3 class="text-2xl font-bold mb-2">AI 디지털 휴먼의 기초</h3>
+                        <p class="text-gray-600 mb-4">디지털 휴먼의 정의와 시장 현황, AI 기술의 발전과 디지털 휴먼 제작의 변화</p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>AI 디지털 휴먼의 개념과 활용 분야</li>
+                            <li>최신 AI 모델 비교와 선택 가이드</li>
+                            <li>디지털 휴먼 제작을 위한 기본 워크플로우</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-item">
+                        <h3 class="text-2xl font-bold mb-2">완벽한 프롬프트 엔지니어링</h3>
+                        <p class="text-gray-600 mb-4">고품질 결과물을 얻기 위한 프롬프트 작성 기법과 최적화 방법</p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>프롬프트 구조와 핵심 키워드 분석</li>
+                            <li>디지털 휴먼을 위한 특화 프롬프트 템플릿</li>
+                            <li>실패 사례 분석과 문제 해결 방법</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-item">
+                        <h3 class="text-2xl font-bold mb-2">이미지 보정과 후처리 기술</h3>
+                        <p class="text-gray-600 mb-4">AI 생성 이미지의 한계를 극복하는 전문적인 후처리 노하우</p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>포토샵과 AI 툴을 활용한 이미지 개선</li>
+                            <li>자연스러운 피부, 머리카락, 눈동자 표현 기법</li>
+                            <li>미세한 디테일 작업을 통한 완성도 높이기</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="steps-container">
+                    <div class="step-item">
+                        <h3 class="text-2xl font-bold mb-2">일관된 디지털 페르소나 제작</h3>
+                        <p class="text-gray-600 mb-4">동일한 인물의 다양한 포즈와 표정을 일관되게 생성하는 기법</p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>특징 유지를 위한 레퍼런스 활용 방법</li>
+                            <li>다양한 포즈와 표정 생성 테크닉</li>
+                            <li>일관성 유지를 위한 프롬프트 관리 시스템</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-item">
+                        <h3 class="text-2xl font-bold mb-2">상업적 활용과 비즈니스 전략</h3>
+                        <p class="text-gray-600 mb-4">디지털 휴먼 판매와 마케팅을 위한 실전 비즈니스 전략</p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>가격 책정과 패키지 구성 전략</li>
+                            <li>클라이언트 요구사항 파악과 소통 방법</li>
+                            <li>포트폴리오 구성과 마케팅 채널 활용법</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-item">
+                        <h3 class="text-2xl font-bold mb-2">미래 기술 트렌드와 발전 방향</h3>
+                        <p class="text-gray-600 mb-4">최신 AI 기술 동향과 디지털 휴먼의 미래 전망</p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>최신 AI 모델 업데이트와 적용 방법</li>
+                            <li>디지털 휴먼의 애니메이션과 영상 제작 기초</li>
+                            <li>메타버스와 AR/VR 환경에서의 활용 가능성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="benefits" class="py-20 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">다른 가이드와는 다른 ANELO만의 차별점</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    이론만 나열한 책이 아닌, 실제 비즈니스 성공을 이끌어낸 노하우가 담긴 가이드
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="premium-card p-8 border-l-4 key-border">
+                    <div class="flex items-start">
+                        <div class="text-4xl key-color mr-6">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">검증된 실전 노하우</h3>
+                            <p class="text-gray-600">
+                                여타 다른 강사들은 자기가 직접 판매해본 적도 없이 이론만 가르치지만, ANELO는 1,300건 이상의 실제 판매 경험에서 얻은 
+                                검증된 노하우를 공유합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card p-8 border-l-4 key-border">
+                    <div class="flex items-start">
+                        <div class="text-4xl key-color mr-6">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">체계적인 학습 시스템</h3>
+                            <p class="text-gray-600">
+                                복잡한 AI 기술을 단계별로 쉽게 배울 수 있도록 체계적인 커리큘럼을 제공합니다. 
+                                초보자도 ANELO의 가이드만 따라하면 고품질 디지털 휴먼을 제작할 수 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card p-8 border-l-4 key-border">
+                    <div class="flex items-start">
+                        <div class="text-4xl key-color mr-6">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">실패를 줄이는 문제해결 가이드</h3>
+                            <p class="text-gray-600">
+                                10만장 이상의 이미지를 제작하며 겪은 모든 실패와 오류 사례, 그리고 그 해결법을 공유합니다. 
+                                실수를 최소화하고 빠르게 성장할 수 있는 지름길을 제시합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card p-8 border-l-4 key-border">
+                    <div class="flex items-start">
+                        <div class="text-4xl key-color mr-6">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">포토샵 상세 활용법</h3>
+                            <p class="text-gray-600">
+                                단순히 이미지를 생성하는 방법뿐만 아니라, 포토샵을 활용한 전문적인 후처리 기법을 자세하게 다룹니다.
+                                AI 이미지의 완성도를 한층 높이는 포토샵 테크닉을 상세히 배울 수 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center">왜 다른 가이드는 충분하지 않을까요?</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-lg">
+                    <thead class="key-bg text-white">
+                        <tr>
+                            <th class="py-4 px-6 text-left"></th>
+                            <th class="py-4 px-6 text-center">일반 AI 이미지 가이드</th>
+                            <th class="py-4 px-6 text-center bg-opacity-90">ANELO의 디지털 휴먼 가이드</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="py-4 px-6 font-medium">실제 판매 경험</td>
+                            <td class="py-4 px-6 text-center text-red-500"><i class="fas fa-times"></i> 없거나 적음</td>
+                            <td class="py-4 px-6 text-center text-green-500 bg-gray-50"><i class="fas fa-check"></i> 1,300건 이상의 판매 경험</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">실전 제작 경험</td>
+                            <td class="py-4 px-6 text-center text-red-500"><i class="fas fa-times"></i> 제한적인 실습 경험</td>
+                            <td class="py-4 px-6 text-center text-green-500 bg-gray-50"><i class="fas fa-check"></i> 10만장 이상의 제작 노하우</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">인물 일관성 유지</td>
+                            <td class="py-4 px-6 text-center text-red-500"><i class="fas fa-times"></i> 기본적인 방법만 제시</td>
+                            <td class="py-4 px-6 text-center text-green-500 bg-gray-50"><i class="fas fa-check"></i> 완벽한 일관성 확보 기술</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">비즈니스 전략</td>
+                            <td class="py-4 px-6 text-center text-red-500"><i class="fas fa-times"></i> 대부분 다루지 않음</td>
+                            <td class="py-4 px-6 text-center text-green-500 bg-gray-50"><i class="fas fa-check"></i> 실제 수익화 전략 포함</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">후처리 노하우</td>
+                            <td class="py-4 px-6 text-center text-red-500"><i class="fas fa-times"></i> 기초적인 수준</td>
+                            <td class="py-4 px-6 text-center text-green-500 bg-gray-50"><i class="fas fa-check"></i> 전문적인 후처리 기법 공개</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">검증된 플랫폼 실적</td>
+                            <td class="py-4 px-6 text-center text-red-500"><i class="fas fa-times"></i> 없음</td>
+                            <td class="py-4 px-6 text-center text-green-500 bg-gray-50"><i class="fas fa-check"></i> 크몽 Prime 등급 & 4.9/5.0 평점</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 px-6 sm:px-12 md:px-24 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-center">ANELO가 만든 AI 디지털 휴먼</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto text-center mb-12">
+                이 가이드를 통해 당신도 아래와 같은 고품질 디지털 휴먼을 만들 수 있습니다
+            </p>
+            
+            <div class="anelo-gallery">
+                <div class="anelo-image-card">
+                    <img src="https://via.placeholder.com/400x500/f8f9fa/999999?text=ANELO+Portrait+1" alt="ANELO 디지털 휴먼 포트레이트" class="w-full h-auto">
+                </div>
+                <div class="anelo-image-card">
+                    <img src="https://via.placeholder.com/400x500/f8f9fa/999999?text=ANELO+Portrait+2" alt="ANELO 디지털 휴먼 포트레이트" class="w-full h-auto">
+                </div>
+                <div class="anelo-image-card">
+                    <img src="https://via.placeholder.com/400x500/f8f9fa/999999?text=ANELO+Portrait+3" alt="ANELO 디지털 휴먼 포트레이트" class="w-full h-auto">
+                </div>
+                <div class="anelo-image-card">
+                    <img src="https://via.placeholder.com/400x500/f8f9fa/999999?text=ANELO+Portrait+4" alt="ANELO 디지털 휴먼 포트레이트" class="w-full h-auto">
+                </div>
+                <div class="anelo-image-card">
+                    <img src="https://via.placeholder.com/400x500/f8f9fa/999999?text=ANELO+Portrait+5" alt="ANELO 디지털 휴먼 포트레이트" class="w-full h-auto">
+                </div>
+                <div class="anelo-image-card">
+                    <img src="https://via.placeholder.com/400x500/f8f9fa/999999?text=ANELO+Portrait+6" alt="ANELO 디지털 휴먼 포트레이트" class="w-full h-auto">
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-bold mb-6">단순한 이미지가 아닌 활용 가능한 디지털 자산</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="premium-card p-6">
+                        <h4 class="text-lg font-bold mb-3">브랜드 모델</h4>
+                        <p class="text-gray-600">
+                            당신만의 브랜드 모델을 만들어 제품 홍보, 광고, 소셜미디어 콘텐츠에 활용할 수 있습니다.
+                        </p>
+                    </div>
+                    <div class="premium-card p-6">
+                        <h4 class="text-lg font-bold mb-3">인플루언서 마케팅</h4>
+                        <p class="text-gray-600">
+                            가상 인플루언서를 제작하여 새로운 마케팅 채널을 구축하고 콘텐츠를 제작할 수 있습니다.
+                        </p>
+                    </div>
+                    <div class="premium-card p-6">
+                        <h4 class="text-lg font-bold mb-3">디지털 콘텐츠</h4>
+                        <p class="text-gray-600">
+                            게임, 메타버스, 웹소설 등 다양한 디지털 콘텐츠에 활용 가능한 캐릭터를
+                           제작할 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section (Updated) -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <div class="flex justify-center mb-4">
+                    <i class="fas fa-star text-2xl key-color"></i>
+                    <i class="fas fa-star text-2xl key-color"></i>
+                    <i class="fas fa-star text-2xl key-color"></i>
+                    <i class="fas fa-star text-2xl key-color"></i>
+                    <i class="fas fa-star text-2xl key-color"></i>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">후기로 증명된<br>실전 만족도 😊</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    구매자분들의 리얼후기를 만나보세요
+                </p>
+            </div>
+
+            <!-- Review Cards -->
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white rounded-xl p-8 mb-10 shadow-lg">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="bg-purple-100 rounded-xl p-5 mb-4 relative">
+                        <p class="pr-8">미드저니 프롬프트 기법이 놀라워요!</p>
+                        <span class="review-emoji">🤩</span>
+                    </div>
+                    <div class="bg-purple-100 rounded-xl p-5 mb-4 relative">
+                        <p class="pr-8">AI 디지털 휴먼 제작이 이렇게 쉬운거였어요</p>
+                        <span class="review-emoji">😍</span>
+                    </div>
+                    <div class="bg-purple-100 rounded-xl p-5 mb-4 relative">
+                        <p class="pr-8">포토샵 후처리 노하우가 정말 실용적이에요</p>
+                        <span class="review-emoji">👍</span>
+                    </div>
+                    <div class="bg-purple-100 rounded-xl p-5 mb-4 relative">
+                        <p class="pr-8">이미지 완성도가 비교가 안될 정도로 좋아졌어요</p>
+                        <span class="review-emoji">😌</span>
+                    </div>
+                    <div class="bg-purple-100 rounded-xl p-5 relative">
+                        <p class="pr-8">일관된 캐릭터 만드는 방법이 정말 유용해요</p>
+                        <span class="review-emoji">🔥</span>
+                    </div>
+                    
+                    <div class="mt-8 text-center">
+                        <p class="font-bold text-xl">혼자서 삽질하며 배우기엔<br>AI 기술은 너무 빠르게 발전하고 있어요 🚀</p>
+                        <p class="text-purple-400 mt-4 font-medium">검증된 전문가에게 배워 시간을 절약하세요!</p>
+                    </div>
+                </div>
+                
+                <!-- Individual Reviews -->
+                <div class="space-y-8">
+                    <div class="review-card">
+                        <div class="review-stars mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            <span class="font-bold">에이네루님!!!</span> 드디어 처음으로 미드저니+스테이블디퓨전+포토샵까지 써서 뽑아봣어요!! 첫작품 ㅠㅠㅠ 처음 미드저니쓸때에 비해서 완성도가 정말 미쳤어요 ㅠㅠ 다 에이네루님 강의덕분이에요!
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            ai 인물 생성 다른 강의 플랫폼에서 들어볼까 했는데 사실 강의 플랫폼에서 뒤통수 맞은게 한두번이 아니라 <span class="key-highlight px-1 font-bold">현업자 강의 들어보자!</span> 하고 시작했는데 정말 꿀팁으로만 꾹꾹 채워져 있어서 정말 후회없었습니다!!
+                        </p>
+                        <p class="text-gray-700">
+                            초보자도 빠르게 따라갈 수 있을만큼 친절히 설명해주시고 1:1 강의 형식이 정말 좋았습니다! 저는 진짜 에린이..(에이아이 어린이 ^^)라서 프롬프트도 제대로 못쓰고 코랩도 첨써보고.. 넘 복잡했는데 설명 듣고 척척 쓸수 있게되었어요..!
+                        </p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-stars mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            <span class="font-bold">후기 남깁니다~ ^^</span>
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            저는 원래 쇼핑몰 운영하다가 잠시 쉬는 기간이였는데 Ai로 모델을 만들 수 있다는 정보를 접하고 여기저기 강의도 여러개 들으면서 배우긴 배웠는데 원하는 퀄리티의 이미지를 생성하는데 시간도 오래 걸리고 뭔가 답답하고 생각보다 쉽지 않았습니다.ㅠㅠ
+                        </p>
+                        <p class="text-gray-700">
+                            그러던중 에이네루님의 블로그에서 미드저니, 포토샵, 스테이블디퓨전까지 실사이미지에 특화된 커리큘럼을 보고 바로 신청하게되었습니다. <span class="key-highlight px-1 font-bold">진짜 탁월한 선택이였던거 같아요!!</span> 4시간이 넘게 하나하나 꼼꼼하게 알려주신 덕분에 답답했던 기분이 싹 풀렸습니다. 특히 미드저니, 포토샵 꿀팁 진짜 많이 배웠습니다.
+                        </p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-stars mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            <span class="font-bold">인물 표현을 잘하고 싶은 마음에 강의를 신청하게 되었습니다.</span>
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            강의는 굉장히 만족스러웠습니다. 엄청나게 <span class="key-highlight px-1 font-bold">꾹꾹 눌러 담은듯한 베스킨 아이스크림처럼 내용들이 정말 가득 담겨있었습니다.</span>
+                        </p>
+                        <p class="text-gray-700">
+                            제겐 아예 새로 접하는 내용이 많았지만 설명을 시작하기 전에 지금 이 내용이 왜 필요한지부터 알려주시는 점과, 강의의 내용들을 쉽게 설명해 주시는 점이 특히 좋았습니다.
+                        </p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-stars mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            <span class="font-bold">에이네루님께 예전부터 배워보고 싶었는데, 역시 배우길 잘 했다는 생각이 듭니다.</span> 굉장히 체계적으로, 쉽게 잘 설명해주셔서 정말 좋았어요!
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            저는 AI랑 담을 쌓고, 포토샵도 10년 전에 잠깐 만져본 게 다인데, <span class="key-highlight px-1 font-bold">필요한 기능만 쏙쏙 골라서 알려주셔서 초보자인 저도 숙련된 스킬을 금방 익힐 수 있었습니다. ✨</span>
+                        </p>
+                        <p class="text-gray-700">
+                            긴 시간의 강의에도 불구하고 지치시는 기색 없이 질문이 있으면 친절하게 다 답변해주셔서 너무 감사했어요. 😊 덕분에 궁금했던 점들이 싹 풀렸고, 이제는 연습하고 응용만 남은 것 같아요. 혼자 독학했다면 훨씬 많은 시간이 걸렸을 텐데, 이렇게 지름길을 알려주셔서 정말 감사합니다!
+                        </p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-stars mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 mb-4">
+                            <span class="font-bold">선생님께서 질문을 하시며 생각해볼 수 있도록 만들어주시고, 편안한 분위기로 재미있게 강의를 해주셔서 좋았습니다.</span>
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            또 선생님의 노하우를 단시간에 모두 알려주시려고 노력해주셔서 감사했습니다.
+                        </p>
+                        <p class="text-gray-700">
+                            선생님 강의를 통해서 <span class="key-highlight px-1 font-bold">실사관련 프롬프트와 구조, 공식에 대해 알 수 있었고 포토샵으로 살짝 수정하는 방법도 배울 수 있어 좋았습니다.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center">
+                이미 많은 분들이 ANELO와 함께 성공했습니다
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="premium-card p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full key-bg flex items-center justify-center mr-4">
+                            <span class="text-xl font-bold text-white">P</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">박OO님</h3>
+                            <p class="text-sm text-gray-500">마케팅 에이전시 대표</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        "기존에 다른 AI 이미지 강의도 들어봤지만 이론에만 치중되어 있었어요. ANELO의 가이드는 실전에서 
+                        바로 적용할 수 있는 내용들로 가득해서 단기간에 프로젝트에 적용할 수 있었습니다. 
+                        덕분에 클라이언트 만족도가 크게 올라갔어요."
+                    </p>
+                    <div class="flex key-color">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="premium-card p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full key-bg flex items-center justify-center mr-4">
+                            <span class="text-xl font-bold text-white">K</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">김OO님</h3>
+                            <p class="text-sm text-gray-500">프리랜서 디자이너</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        "ANELO 가이드를 통해 디지털 휴먼 제작 기술을 배우고 새로운 수익 창출 모델을 만들었습니다. 
+                        특히 일관성 있는 캐릭터 제작 방법과 포트폴리오 전략 덕분에 지금은 월 500만원 이상의 
+                        안정적인 수입을 올리고 있습니다."
+                    </p>
+                    <div class="flex key-color">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="premium-card p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full key-bg flex items-center justify-center mr-4">
+                            <span class="text-xl font-bold text-white">L</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">이OO님</h3>
+                            <p class="text-sm text-gray-500">스타트업 창업자</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        "마케팅 예산이 부족했던 초기 스타트업 단계에서 ANELO 가이드를 통해 자체적으로 
+                        브랜드 모델을 제작했습니다. 외부 모델 섭외 비용의 10%도 안 되는 
+                        투자로 브랜딩을 성공적으로 구축할 수 있었습니다."
+                    </p>
+                    <div class="flex key-color">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <div class="premium-card p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full key-bg flex items-center justify-center mr-4">
+                            <span class="text-xl font-bold text-white">C</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">최OO님</h3>
+                            <p class="text-sm text-gray-500">콘텐츠 크리에이터</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        "AI에 관심은 있었지만 기술적 지식이 없어 시작하기 어려웠어요. 
+                        ANELO의 가이드는 정말 초보자 눈높이에 맞춰져 있어서 쉽게 따라할 수 있었고, a
+                        지금은 제 유튜브 채널의 가상 캐릭터를 직접 만들어 운영하고 있습니다."
+                    </p>
+                    <div class="flex key-color">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-6 sm:px-12 md:px-24 bg-white">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <div class="premium-card overflow-hidden relative border-2 key-border">
+                    <div class="key-bg text-white py-3 px-8 price-tag absolute top-6 right-0 font-bold text-lg">
+                        단 한 번의 투자로 평생 사용
+                    </div>
+                    
+                    <div class="p-8 pt-24 text-center">
+                        <h2 class="text-4xl font-bold mb-2">AI 디지털 휴먼 제작 마스터 가이드</h2>
+                        <p class="text-xl text-gray-600 mb-6">
+                            누구나 쉽게 만드는 프리미엄 AI 디지털 휴먼
+                        </p>
+                        
+                        <div class="flex justify-center items-baseline my-8">
+                            <span class="text-5xl font-extrabold">₩880,000</span>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <div class="text-left max-w-lg mx-auto space-y-3">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle key-color mr-3"></i>
+                                    <span>1,300건 이상의 실제 판매 경험을 통한 노하우</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle key-color mr-3"></i>
+                                    <span>10만장 이상의 이미지 제작 과정에서 얻은 실전 기술</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle key-color mr-3"></i>
+                                    <span>초보자도 쉽게 따라할 수 있는 단계별 가이드</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle key-color mr-3"></i>
+                                    <span>전문가급 후처리 및 보정 기술 노하우</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle key-color mr-3"></i>
+                                    <span>성공적인 비즈니스 전략과 수익화 방법</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle key-color mr-3"></i>
+                                    <span>PDF 형식의 전자책 + 고해상도 예시 이미지</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a id="purchase" href="#" class="inline-block key-bg text-white text-xl px-12 py-4 rounded-full font-bold hover:bg-opacity-90 transition-colors">
+                            지금 바로 구매하기
+                        </a>
+                        
+                        <p class="text-sm text-gray-500 mt-4">
+                            구매 후 즉시 다운로드 가능한 디지털 상품입니다
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-12 bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-bold text-lg mb-3">💡 투자 가치 분석</h3>
+                    <p class="text-gray-600 mb-4">
+                        단 한 번의 디지털 휴먼 제작 프로젝트로도 본 가이드의 비용을 충분히 회수할 수 있습니다.
+                        일반적인 디지털 휴먼 제작 비용이 100만원~500만원 사이임을 감안할 때, 
+                        한 건의 프로젝트만으로도 이미 본 가이드 비용 이상의 수익을 창출할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-6 sm:px-12 md:px-24 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center">자주 묻는 질문</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-lg mb-2">AI에 대한 기초 지식이 없어도 배울 수 있나요?</h3>
+                    <p class="text-gray-600">
+                        네, 가능합니다. 이 가이드는 AI나 프롬프트 엔지니어링에 대한 기초 지식이 없는 초보자도 
+                        쉽게 따라할 수 있도록 단계별로 설명되어 있습니다. 기본 개념부터 시작하여 
+                        고급 기술까지 체계적으로 배울 수 있습니다.
+                    </p>
+                </div>
+                
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-lg mb-2">어떤 형태로 제공되나요?</h3>
+                    <p class="text-gray-600">
+                        고해상도 PDF 전자책 형태로 제공됩니다. 구매 후 즉시 다운로드 받을 수 있으며, 
+                        컴퓨터, 태블릿, 스마트폰 등 다양한 기기에서 열람 가능합니다. 
+                        주요 예시 이미지와 프롬프트 템플릿도 함께 제공됩니다.
+                    </p>
+                </div>
+                
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-lg mb-2">어떤 AI 모델을 다루나요?</h3>
+                    <p class="text-gray-600">
+                        현재 시장에서 가장 많이 사용되는 주요 AI 이미지 생성 모델들을 모두 다룹니다. 
+                        Midjourney, DALL-E, Stable Diffusion 등 다양한 모델의 특징과 
+                        각 모델에 최적화된 프롬프트 작성법도 포함되어 있습니다.
+                    </p>
+                </div>
+                
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-lg mb-2">후처리에 필요한 포토샵 등의 툴 사용법도 배울 수 있나요?</h3>
+                    <p class="text-gray-600">
+                        네, 기본적인 후처리 툴 사용법부터 디지털 휴먼 전문가들이 사용하는 고급 테크닉까지 
+                        단계별로 자세히 설명되어 있습니다. 포토샵 초보자도 쉽게 따라할 수 있는 
+                        핵심 기능 위주로 구성되어 있습니다.
+                    </p>
+                </div>
+                
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-lg mb-2">구매 후 업데이트나 추가 지원이 있나요?</h3>
+                    <p class="text-gray-600">
+                        네, AI 기술은 빠르게 발전하고 있기 때문에 주요 기술 업데이트가 있을 때마다 
+                        가이드 내용도 업데이트됩니다. 구매하신 분들께는 업데이트된 내용을 
+                        무상으로 제공해 드립니다.
+                    </p>
+                </div>
+                
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-lg mb-2">환불 정책은 어떻게 되나요?</h3>
+                    <p class="text-gray-600">
+                        디지털 콘텐츠 특성상 기본적으로 환불이 어렵습니다. 
+                        그러나 기술적인 문제로 콘텐츠에 접근할 수 없는 경우에는 
+                        구매일로부터 7일 이내에 고객센터로 문의주시면 도움드리겠습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-6 sm:px-12 md:px-24 key-bg text-white">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">지금 바로 시작하세요</h2>
+            <p class="text-xl max-w-3xl mx-auto mb-10">
+                1,300건 이상의 판매 경험과 10만장 이상의 이미지 제작 노하우가 담긴 
+                ANELO의 프리미엄 디지털 휴먼 제작 가이드로 당신의 가능성을 확장하세요.
+            </p>
+            <a href="#purchase" class="inline-block bg-white text-black text-xl px-12 py-4 rounded-full font-bold hover:bg-gray-200 transition-colors">
+                지금 바로 구매하기
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 px-6 sm:px-12 md:px-24 bg-white border-t border-gray-200">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold key-color mb-4 md:mb-0">ANELO</div>
+            <div class="text-gray-500 text-sm">
+                &copy; 2023 ANELO. All rights reserved. | 사업자등록번호: 000-00-00000 | 이메일: <a href="/cdn-cgi/l/email-protection#6201070b062205000c0106480f0700"><span class="__cf_email__" data-cfemail="c1a2a4a8a5e1a6a3afb2a5efa2aeac">[email&#160;protected]</span></a>
+            </div>
+        </div>
+    </footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
