@@ -1,0 +1,90 @@
+name: ChatGPT Instagram ZIPs
+
+on:
+  push:
+    branches:
+      - chatgpt-instagram-zips-20260901
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install downloader
+        run: |
+          mkdir -p /tmp/igdl
+          cd /tmp/igdl
+          npm init -y >/dev/null 2>&1
+          npm install snapsave-media-downloader@2.4.1 >/dev/null
+      - name: Download all carousel images
+        run: |
+          cd /tmp/igdl
+          cat > download.mjs <<'EOF'
+          import { snapsave } from 'snapsave-media-downloader';
+          import fs from 'node:fs/promises';
+          import path from 'node:path';
+
+          const posts = [
+            ['DaiEngdEzHS', 'https://www.instagram.com/p/DaiEngdEzHS/'],
+            ['Da5HTzEE-4c', 'https://www.instagram.com/p/Da5HTzEE-4c/'],
+            ['DbIStACE3l9', 'https://www.instagram.com/p/DbIStACE3l9/'],
+          ];
+          const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36';
+          await fs.mkdir('out', { recursive: true });
+
+          const extFromType = (ct='') => {
+            if (ct.includes('png')) return '.png';
+            if (ct.includes('webp')) return '.webp';
+            if (ct.includes('avif')) return '.avif';
+            if (ct.includes('gif')) return '.gif';
+            return '.jpg';
+          };
+
+          for (const [code, url] of posts) {
+            const dir = path.join('out', code);
+            await fs.mkdir(dir, { recursive: true });
+            let result = await snapsave(url, { retry: 4, retryDelay: 1200, userAgent: ua });
+            if (!result?.success) throw new Error(`${code}: SnapSave failed: ${result?.message || 'unknown'}`);
+            const images = (result.data?.media || []).filter(m => m.type === 'image' && m.url);
+            if (!images.length) throw new Error(`${code}: no image media returned; media=${JSON.stringify(result.data?.media || [])}`);
+            const sourceLines = [];
+            let idx = 0;
+            for (const media of images) {
+              idx += 1;
+              const res = await fetch(media.url, {
+                redirect: 'follow',
+                headers: { 'user-agent': ua, 'accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8' }
+              });
+              if (!res.ok) throw new Error(`${code} image ${idx}: HTTP ${res.status} ${res.statusText}`);
+              const ct = res.headers.get('content-type') || '';
+              const buf = Buffer.from(await res.arrayBuffer());
+              if (!ct.startsWith('image/') && buf.length < 10000) {
+                throw new Error(`${code} image ${idx}: unexpected content-type=${ct}, bytes=${buf.length}`);
+              }
+              const filename = String(idx).padStart(2, '0') + extFromType(ct);
+              await fs.writeFile(path.join(dir, filename), buf);
+              sourceLines.push(`${filename}\t${buf.length} bytes\t${ct}\t${media.url}`);
+              console.log(`${code}: ${filename} ${buf.length} bytes ${ct}`);
+            }
+            await fs.writeFile(path.join(dir, 'source_urls.txt'), sourceLines.join('\n') + '\n');
+            await fs.writeFile(path.join(dir, 'README.txt'), `Instagram post: ${url}\nImages downloaded: ${images.length}\nFiles are the media renditions returned for the public post.\n`);
+          }
+          EOF
+          node download.mjs
+      - name: Create individual ZIP files
+        run: |
+          cd /tmp/igdl/out
+          zip -qr ../DaiEngdEzHS.zip DaiEngdEzHS
+          zip -qr ../Da5HTzEE-4c.zip Da5HTzEE-4c
+          zip -qr ../DbIStACE3l9.zip DbIStACE3l9
+          ls -lh ../*.zip
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: instagram-zips
+          path: /tmp/igdl/*.zip
+          if-no-files-found: error
+          retention-days: 1
