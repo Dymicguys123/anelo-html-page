@@ -8,79 +8,87 @@ on:
 jobs:
   download:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     steps:
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install downloader
+      - name: Download all carousel images via public embed proxy
+        shell: bash
         run: |
-          mkdir -p /tmp/igdl
-          cd /tmp/igdl
-          npm init -y >/dev/null 2>&1
-          npm install snapsave-media-downloader@2.4.1 >/dev/null
-      - name: Download all carousel images
-        run: |
-          cd /tmp/igdl
-          cat > download.mjs <<'EOF'
-          import { snapsave } from 'snapsave-media-downloader';
-          import fs from 'node:fs/promises';
-          import path from 'node:path';
+          set -euo pipefail
+          ROOT=/tmp/igdl
+          mkdir -p "$ROOT/out"
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36'
 
-          const posts = [
-            ['DaiEngdEzHS', 'https://www.instagram.com/p/DaiEngdEzHS/'],
-            ['Da5HTzEE-4c', 'https://www.instagram.com/p/Da5HTzEE-4c/'],
-            ['DbIStACE3l9', 'https://www.instagram.com/p/DbIStACE3l9/'],
-          ];
-          const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36';
-          await fs.mkdir('out', { recursive: true });
+          for CODE in DaiEngdEzHS Da5HTzEE-4c DbIStACE3l9; do
+            DIR="$ROOT/out/$CODE"
+            mkdir -p "$DIR"
+            echo "Fetching $CODE"
+            curl -fsSL --connect-timeout 15 --max-time 55 --retry 2 --retry-delay 2 \
+              -A "$UA" "https://www.vxinstagram.com/p/$CODE/" -o "$DIR/page.html"
 
-          const extFromType = (ct='') => {
-            if (ct.includes('png')) return '.png';
-            if (ct.includes('webp')) return '.webp';
-            if (ct.includes('avif')) return '.avif';
-            if (ct.includes('gif')) return '.gif';
-            return '.jpg';
-          };
+            python3 - "$DIR/page.html" "$DIR/source_urls.txt" <<'PY'
+          import sys
+          from html.parser import HTMLParser
+          from pathlib import Path
 
-          for (const [code, url] of posts) {
-            const dir = path.join('out', code);
-            await fs.mkdir(dir, { recursive: true });
-            let result = await snapsave(url, { retry: 4, retryDelay: 1200, userAgent: ua });
-            if (!result?.success) throw new Error(`${code}: SnapSave failed: ${result?.message || 'unknown'}`);
-            const images = (result.data?.media || []).filter(m => m.type === 'image' && m.url);
-            if (!images.length) throw new Error(`${code}: no image media returned; media=${JSON.stringify(result.data?.media || [])}`);
-            const sourceLines = [];
-            let idx = 0;
-            for (const media of images) {
-              idx += 1;
-              const res = await fetch(media.url, {
-                redirect: 'follow',
-                headers: { 'user-agent': ua, 'accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8' }
-              });
-              if (!res.ok) throw new Error(`${code} image ${idx}: HTTP ${res.status} ${res.statusText}`);
-              const ct = res.headers.get('content-type') || '';
-              const buf = Buffer.from(await res.arrayBuffer());
-              if (!ct.startsWith('image/') && buf.length < 10000) {
-                throw new Error(`${code} image ${idx}: unexpected content-type=${ct}, bytes=${buf.length}`);
-              }
-              const filename = String(idx).padStart(2, '0') + extFromType(ct);
-              await fs.writeFile(path.join(dir, filename), buf);
-              sourceLines.push(`${filename}\t${buf.length} bytes\t${ct}\t${media.url}`);
-              console.log(`${code}: ${filename} ${buf.length} bytes ${ct}`);
-            }
-            await fs.writeFile(path.join(dir, 'source_urls.txt'), sourceLines.join('\n') + '\n');
-            await fs.writeFile(path.join(dir, 'README.txt'), `Instagram post: ${url}\nImages downloaded: ${images.length}\nFiles are the media renditions returned for the public post.\n`);
-          }
-          EOF
-          node download.mjs
+          class P(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.urls=[]
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() != 'img':
+                      return
+                  a=dict(attrs)
+                  if a.get('alt') == 'Instagram post' and a.get('src'):
+                      self.urls.append(a['src'])
+
+          src=Path(sys.argv[1]).read_text(encoding='utf-8', errors='ignore')
+          p=P(); p.feed(src)
+          # preserve order and remove duplicates
+          seen=set(); urls=[]
+          for u in p.urls:
+              if u not in seen:
+                  seen.add(u); urls.append(u)
+          if not urls:
+              raise SystemExit('No carousel image URLs found')
+          Path(sys.argv[2]).write_text('\n'.join(urls)+'\n', encoding='utf-8')
+          print(f'Found {len(urls)} images')
+          PY
+
+            N=0
+            while IFS= read -r URL; do
+              N=$((N+1))
+              TMP="$DIR/.img-$N"
+              curl -fsSL --connect-timeout 15 --max-time 60 --retry 3 --retry-delay 2 \
+                -A "$UA" -H 'Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8' \
+                "$URL" -o "$TMP"
+              MIME=$(file -b --mime-type "$TMP")
+              case "$MIME" in
+                image/jpeg) EXT=jpg ;;
+                image/png) EXT=png ;;
+                image/webp) EXT=webp ;;
+                image/avif) EXT=avif ;;
+                image/gif) EXT=gif ;;
+                *) echo "Unexpected MIME $MIME for $URL"; exit 1 ;;
+              esac
+              printf -v FN '%02d.%s' "$N" "$EXT"
+              mv "$TMP" "$DIR/$FN"
+              echo "$CODE $FN $(stat -c%s "$DIR/$FN") bytes $MIME"
+            done < "$DIR/source_urls.txt"
+
+            rm -f "$DIR/page.html"
+            printf 'Instagram post: https://www.instagram.com/p/%s/\nImages downloaded: %s\n' "$CODE" "$N" > "$DIR/README.txt"
+          done
+
       - name: Create individual ZIP files
+        shell: bash
         run: |
+          set -euo pipefail
           cd /tmp/igdl/out
           zip -qr ../DaiEngdEzHS.zip DaiEngdEzHS
           zip -qr ../Da5HTzEE-4c.zip Da5HTzEE-4c
           zip -qr ../DbIStACE3l9.zip DbIStACE3l9
           ls -lh ../*.zip
+
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
